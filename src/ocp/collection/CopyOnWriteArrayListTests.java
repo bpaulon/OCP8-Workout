@@ -55,7 +55,7 @@ public class CopyOnWriteArrayListTests {
 				.collect(toList()));
 
 		Iterator<Integer> iter = cwal.iterator();
-
+		
 		IntStream.rangeClosed(10, 20)
 				.forEach(i -> {
 					cwal.add(i);

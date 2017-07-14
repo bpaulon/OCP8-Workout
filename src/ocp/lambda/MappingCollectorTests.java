@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,7 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class CollectorsToMapTests {
+public class MappingCollectorTests {
 
 	@Rule
 	public ExceptionLoggingRule exLogger = new ExceptionLoggingRule();
@@ -36,7 +37,9 @@ public class CollectorsToMapTests {
 	public void duplicateKeysShouldBeMerged() {
 		AtomicInteger index = new AtomicInteger();
 		Map<String, Integer> map = supplier.get()
-				.collect(Collectors.toMap(k -> k, k -> index.incrementAndGet(), (key1, key2) -> key1));
+				.collect(Collectors.toMap(UnaryOperator.identity() /* k->k */, 
+						k -> index.incrementAndGet(),
+						(key1, key2) -> key1));
 		assertEquals(Arrays.asList("aa", "bb", "cc"), map.keySet()
 				.stream()
 				.sorted()
@@ -47,7 +50,7 @@ public class CollectorsToMapTests {
 	@Test
 	public void duplicateKeysShouldBeGrouped() {
 		AtomicInteger index = new AtomicInteger();
-		
+
 		// {cc=[4], bb=[2], aa=[1, 3]}
 		Map<String, List<Integer>> map = supplier.get()
 				.collect(Collectors.groupingBy(k -> (String) k,
@@ -56,7 +59,8 @@ public class CollectorsToMapTests {
 		// [1, 2, 3, 4]
 		List<Integer> list = map.keySet()
 				.stream()
-				.flatMap(k -> map.get(k).stream())
+				.flatMap(k -> map.get(k)
+						.stream())
 				.sorted()
 				.collect(Collectors.toList());
 		assertEquals(Arrays.asList(1, 2, 3, 4), list);

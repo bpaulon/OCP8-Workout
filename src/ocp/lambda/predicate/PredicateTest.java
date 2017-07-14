@@ -14,14 +14,14 @@ import org.junit.Test;
 public class PredicateTest {
 
 	@Test
-	public void  testPredicate01() {
+	public void testPredicate01() {
 		BiPredicate<String, String> b1 = String::startsWith;
 		Assert.assertTrue(b1.test("abc", "a"));
-		
+
 		Predicate<String> b2 = String::isEmpty;
-		Stream.of("a","b","c")
-		.filter(b2.negate())
-		.forEach(System.out::println);
+		Stream.of("a", "b", "c")
+				.filter(b2.negate())
+				.forEach(System.out::println);
 	}
 	
 	class ClassA {
@@ -46,7 +46,7 @@ public class PredicateTest {
 		Supplier<ClassA> s = ClassA::new;
 		UnaryOperator<String> uo = String::trim;
 		BinaryOperator<String> bo = String::concat;
-//		Function<String, String> func = String::concat;
+//		Function<String, String> func = String::concat; // DOES NOT Compile - it should be a BiFunction
 		Function<String, String> func2 = new ClassA()::m;
 	
 	}
@@ -82,7 +82,7 @@ public class PredicateTest {
 		Runnable r3 = r2::run; //equivalent to () -> r2.run();
 		r3 = () -> r2.run();
 		
-		//this doesn't compile
+		//this doesn't compile. r2 must be effective final so we cannot re-assign it
 		//r2 = () -> r2.run();
 	}
 	

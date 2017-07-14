@@ -38,4 +38,15 @@ public class SwitchTests {
 			break;
 		}
 	}
+	
+	@Test
+	public void test03() {
+		char ch = 'c';
+		switch(ch) {
+			case 'c' : break;
+			case 'b' : 
+			default:
+		}
+	}
+	
 }

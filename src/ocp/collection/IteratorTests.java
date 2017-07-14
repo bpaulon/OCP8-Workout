@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,14 +28,14 @@ public class IteratorTests {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
+	final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
+	
 	/**
-	 * Cannot remove elements in a for loop. It throws ConcurrentModificationException. One must use an iterator for
-	 * that.
+	 * Cannot remove elements in a for loop. It throws ConcurrentModificationException. 
+	 * Use an iterator for that.
 	 */
 	@Test
 	public void removeOnIteratedListShouldThrowException() {
-		List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
-
 		thrown.expect(ConcurrentModificationException.class);
 		for (String el : list) {
 			list.remove(el);
@@ -43,7 +44,6 @@ public class IteratorTests {
 
 	@Test
 	public void removeOnIteratorShouldChangeCollection() {
-		List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
 		Iterator<String> itList = list.iterator();
 		while (itList.hasNext()) {
 			itList.next();
@@ -52,12 +52,23 @@ public class IteratorTests {
 
 		assertTrue(list.isEmpty());
 	}
+	
+	@Test
+	public void iteratingAModifiedCollectionShouldThrowException() {
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()) {
+			list.add("t");
+			
+			thrown.expect(ConcurrentModificationException.class);
+			it.next();
+		}
+	}
 
 	@Test
 	public void concurrentHashMapShouldAllowModifications() {
 		ConcurrentHashMap<Integer, String> map = IntStream.of(1, 2, 3, 4, 5)
 				.boxed()
-				.collect(Collectors.toMap(k -> k, k -> k + "", (v1, v2) -> v1, ConcurrentHashMap::new));
+				.collect(Collectors.toMap(UnaryOperator.identity(), k -> k + "", (v1, v2) -> v1, ConcurrentHashMap::new));
 
 		// the keySet() method returns a KeySetView backed by the map. Modifications to the map reflect in the
 		// KeySetView
@@ -74,6 +85,12 @@ public class IteratorTests {
 		List<Integer> al = new ArrayList<>(map.keySet());
 		al.sort(Comparator.naturalOrder());
 		assertEquals(Arrays.asList(10, 20, 30, 40, 50), al);
+	}
+	
+	@Test
+	public void fromIteratorToList() {
+		Iterator<Integer> it = Arrays.asList(1, 2,3).iterator();
+		it.forEachRemaining(new ArrayList<>()::add);
 	}
 
 }

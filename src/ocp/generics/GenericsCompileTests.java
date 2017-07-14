@@ -1,7 +1,6 @@
 package ocp.generics;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -103,7 +102,7 @@ public class GenericsCompileTests {
 		List<? super String> subList = new ArrayList<>();
 		
 		// The List.addAll() method requires an argument of type Collection<? extends String>, thus the element type of the new ArrayList 
-		// instance 
+		// instance if inferred 
 		list.addAll(new ArrayList<>());
 		
 		/*

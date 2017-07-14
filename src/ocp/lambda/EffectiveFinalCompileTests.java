@@ -31,9 +31,9 @@ public class EffectiveFinalCompileTests {
 	@SuppressWarnings("unused")
 	@Test
 	public void test03() {
-		AtomicLong a = new AtomicLong(1L);
-		a = new AtomicLong(2L);
-		// the a AtomicLong reference changed ones and is not effectively final - DOES NOT compile if used in a lambda 
+		AtomicLong al = new AtomicLong(1L);
+		al = new AtomicLong(2L);
+		// the al AtomicLong reference changed ones so it is not effectively final - DOES NOT compile if used in a lambda 
 		// after this line
 		// -> "Local variable a defined in an enclosing scope must be final or effectively final"
 		// IntStream.range(1,3).forEach(s -> a.set(s));

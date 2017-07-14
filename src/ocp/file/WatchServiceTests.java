@@ -41,6 +41,11 @@ public class WatchServiceTests {
 				.newWatchService();
 	}
 
+	/**
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	@Test
 	public void cancellingAWatchKeyShouldMakeItInvalid() throws InterruptedException, IOException {
 		File createdFile = folder.newFile("file.txt");

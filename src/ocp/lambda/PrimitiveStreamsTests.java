@@ -56,11 +56,11 @@ public class PrimitiveStreamsTests {
 		assertEquals(6, sum);
 		
 		// provide a supplier that returns an Integer for the orElseGet
-		sum = s.get().boxed().reduce((i,j) -> i+=j).orElseGet(() -> 0);
+		sum = s.get().boxed().reduce((i,j) -> i += j).orElseGet(() -> 0);
 		assertEquals(6, sum);
 		
 		// provide a default value for orElse
-		sum = s.get().boxed().reduce((i,j) -> i+=j).orElse(0);
+		sum = s.get().boxed().reduce((i,j) -> i += j).orElse(0);
 		assertEquals(6, sum);
 		
 	}

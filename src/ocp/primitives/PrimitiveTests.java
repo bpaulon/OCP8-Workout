@@ -2,7 +2,7 @@ package ocp.primitives;
 
 import org.junit.Test;
 
-public class PrimitivesTest {
+public class PrimitiveTests {
 
 	float f1 = 102;
 	float f2 = (int)102.0;
