@@ -33,16 +33,19 @@ public class OperatorTests {
 		op3 = s -> s.trim();
 
 		BiFunction<String, String, String> f1 = String::concat;
+		f1 = (s1, s2) -> { return s1.concat(s2);};
 
 		Function<String, String> f2 = String::trim;
-
 		f2 = new Function<String, String>() {
 			@Override
 			public String apply(String t) {
 				return t.trim();
 			}
 		};
+		
 		Function<String, Integer> f3 = String::length;
+		f3 = s -> s.length();
+		
 	}
 
 	@Test
@@ -63,12 +66,4 @@ public class OperatorTests {
 		assertEquals(Arrays.asList(0, 0, 0, 0, 0), l1);
 	}
 	
-	
-	
-	
-	
-	@Test
-	public void test02() {
-		IntStream.iterate(0,  i -> ++i).boxed().limit(100).forEach(System.out::print);
-	}
 }
