@@ -15,6 +15,22 @@ public class DiamondNotationTests {
 
 		// '<>' CANNOT be used with anonymous classes like
 		// BiConsumer<String, Integer> bic = new BiConsumder<> {...} - DOES NOT COMPILE
+		/*
+		 * Internally, a Java compiler operates over a richer set of types than those that 
+		 * can be written down explicitly in a Java program. The compiler-internal types 
+		 * which cannot be written in a Java program are called non-denotable types. 
+		 * Non-denotable types can occur as the result of the inference used by diamond. 
+		 * Therefore, using diamond with anonymous inner classes is not supported since 
+		 * doing so in general would require extensions to the class file signature 
+		 * attribute to represent non-denotable types, a de facto JVM change. It is 
+		 * feasible that future platform versions could allow use of diamond when 
+		 * creating an anonymous inner class as long as the inferred type was denotable.
+		 * 
+		 * That should be possible in Java 9
+		 * 
+		 * @see Project Coin Documentation
+		 * http://cr.openjdk.java.net/~darcy/ProjectCoin/ProjectCoin-Documentation-v0.9375.html
+		 */
 		BiConsumer<String, Integer> bic = new BiConsumer<String, Integer>() {
 			public void accept(String s, Integer i) {
 				// consume both

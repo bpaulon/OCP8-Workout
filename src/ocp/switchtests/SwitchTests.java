@@ -17,6 +17,7 @@ public class SwitchTests {
 		case 2:
 			System.out.println(int2);
 			break;
+		
 		}
 	}
 
@@ -46,6 +47,21 @@ public class SwitchTests {
 			case 'c' : break;
 			case 'b' : 
 			default:
+		}
+	}
+	
+	@Test
+	public void test04() {
+		Character ch = 'c';
+		switch(ch) {
+		case 'c' :break;
+		case 2: break;
+		}
+		
+		Short sh = 7;
+		switch(sh) {
+			case '4': break;
+			case 3 : break;
 		}
 	}
 	

@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -28,8 +27,8 @@ public class CopyOnWriteArrayListTests {
 	public ExpectedException thrown = ExpectedException.none();
 
 	/**
-	 * From JavaDoc: Element-changing operations on iterators themselves (of CopyOnWriteArrayList) (remove, set, and add) are not supported. These
-	 * methods throw UnsupportedOperationException.
+	 * From JavaDoc: Element-changing operations on iterators themselves (of CopyOnWriteArrayList) (remove, set, and add) 
+	 * are not supported. These methods throw UnsupportedOperationException.
 	 */
 	@Test
 	public void modifyOperationOnIteratorShouldThrowException() {
@@ -47,6 +46,7 @@ public class CopyOnWriteArrayListTests {
 	 * iterator is guaranteed not to throw ConcurrentModificationException. The iterator will not reflect additions,
 	 * removals, or changes to the list since the iterator was created.
 	 */
+	// adding elements to the collection after the iterator was created will not show up in the iterator.
 	@Test
 	public void iteratorShouldNotReflectModifications() {
 		CopyOnWriteArrayList<Integer> cwal = new CopyOnWriteArrayList<>(IntStream.iterate(1, i -> i + 1)
@@ -55,7 +55,7 @@ public class CopyOnWriteArrayListTests {
 				.collect(toList()));
 
 		Iterator<Integer> iter = cwal.iterator();
-		
+		// add some elements to the array
 		IntStream.rangeClosed(10, 20)
 				.forEach(i -> {
 					cwal.add(i);

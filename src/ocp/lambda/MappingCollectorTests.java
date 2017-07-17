@@ -19,6 +19,7 @@ public class MappingCollectorTests {
 
 	@Rule
 	public ExceptionLoggingRule exLogger = new ExceptionLoggingRule();
+	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 

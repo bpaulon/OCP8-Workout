@@ -12,11 +12,16 @@ import org.junit.Test;
 
 public class CallableTests {
 
+	/**
+	 * An exception thrown from a Call
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void getShouldLaunchAnExecutionException() throws InterruptedException {
 		Callable<String> c = () -> {
 			throw new RuntimeException("from callable");
 		};
+		
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<String> f = service.submit(c);
 

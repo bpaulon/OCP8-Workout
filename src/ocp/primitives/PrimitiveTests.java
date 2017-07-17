@@ -31,4 +31,22 @@ public class PrimitiveTests {
 //	public void test() {
 //		System.out.println();
 //	}
+	
+	@Test
+	public void test01() {
+		final char ch = 'c';
+		Short s1  = ch;
+		/*
+		 * In addition, if the expression is a constant expression (§15.28) of type byte, short, char, or int:
+           A narrowing primitive conversion may be used if the type of the variable is byte, short, or char, and 
+           the value of the constant expression is representable in the type of the variable.
+
+           A narrowing primitive conversion followed by a boxing conversion may be used if the type of the variable is:
+           	Byte and the value of the constant expression is representable in the type byte.
+            Short and the value of the constant expression is representable in the type short.
+            Character and the value of the constant expression is representable in the type char.
+		 */
+		// the following does not compile
+		// Integer i1 = ch; // DOES NOT COMPILE 
+	}
 }

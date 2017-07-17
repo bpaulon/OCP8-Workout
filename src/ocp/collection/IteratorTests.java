@@ -44,10 +44,10 @@ public class IteratorTests {
 
 	@Test
 	public void removeOnIteratorShouldChangeCollection() {
-		Iterator<String> itList = list.iterator();
-		while (itList.hasNext()) {
-			itList.next();
-			itList.remove();
+		Iterator<String> it = list.iterator();
+		while (it.hasNext()) {
+			it.next();
+			it.remove();
 		}
 
 		assertTrue(list.isEmpty());
