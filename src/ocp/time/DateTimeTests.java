@@ -1,6 +1,7 @@
 package ocp.time;
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
@@ -30,4 +31,14 @@ public class DateTimeTests {
 		LocalDateTime ldt02 = LocalDateTime.parse("2017-03-12T02:00:00");
 		assertEquals("2017-03-12T02:00", ldt02.toString());
 	}
+	
+	@Test
+	public void test03() {
+		LocalDate ld = LocalDate.of(2015, 2, 27);
+		ld = ld.plusDays(3);
+		assertEquals(Month.MARCH, ld.getMonth());
+		assertEquals("MARCH", Month.MARCH.toString());
+	}
+	
+	
 }

@@ -26,4 +26,19 @@ public class AtomicTests {
 		AtomicInteger ai = new AtomicInteger();
 		assertEquals(1, ai.addAndGet(1));
 	}
+	
+	@Test
+	public void test03() {
+		
+		class ClassA {
+			int val = 10;
+			private AtomicInteger value = new AtomicInteger(val);
+			ClassA() {
+				val = 20;
+			}
+		}
+		
+		ClassA a = new ClassA();
+		assertEquals(10, a.value.get());
+	}
 }

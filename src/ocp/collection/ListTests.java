@@ -1,5 +1,8 @@
 package ocp.collection;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +16,13 @@ public class ListTests {
 		
 		// replaceAll accepts an UnaryOperator
 		l1.replaceAll(s -> s+"*");
-		System.out.println(l1);
+		assertEquals(Arrays.asList("a*", "b*"), l1);
+	}
+	
+	@Test
+	public void test02() {
+		List<String> l1 = new ArrayList<>(Arrays.asList("a", "b"));
+		l1.removeIf(s -> s.startsWith("a"));
+		assertEquals(1, l1.size());
 	}
 }

@@ -3,14 +3,25 @@ package ocp.lambda;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class PrimitiveStreamsTests {
 
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
 	@Test
 	public void sumShouldReturnTypeOfStream() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
@@ -71,4 +82,38 @@ public class PrimitiveStreamsTests {
 		double avg = s.get().average().getAsDouble();
 		assertEquals(2.0, avg, 0.0);
 	}
+	
+	@Test
+	public void toArray() {
+		Stream<Double> s = Stream.of(1.0, 2.0,3.0,4.0);
+		IntFunction<Double[]> f = i -> new Double[i];
+		Double[] a = (Double[])s.toArray(f);
+		
+		System.out.println(Arrays.asList(a));
+	}
+	
+	@Test
+	public void test03() {
+		Supplier<IntStream> s = () -> IntStream.of(10, 5, 7, 13, 11);
+		OptionalInt oi = s.get()
+				.reduce(Integer::max);
+		assertEquals(13, oi.getAsInt());
+
+		Optional<Integer> oo = s.get()
+				.mapToObj(i -> i)
+				.max(Comparator.naturalOrder());
+		assertEquals(Integer.valueOf(13), oo.get());
+	}
+	
+	@Test
+	public void modifyingABuiltStreamShouldThrowException() {
+		IntStream.Builder b = IntStream.builder();
+		b.add(1).add(2).add(3).accept(4);
+		b.build();
+		
+		thrown.expect(IllegalStateException.class);
+		b.add(5);
+		LongStream.of(1,2);
+	}
+	
 }
