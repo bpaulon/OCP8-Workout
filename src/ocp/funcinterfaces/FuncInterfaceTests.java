@@ -51,7 +51,7 @@ public class FuncInterfaceTests {
 		I1 s = () -> "abc";
 		assertEquals("abc", s.baz());
 		
-		//I2 si not a functional interface because it provides an implementation for the baz method
+		// I2 si not a functional interface because it provides an implementation for the baz method
 		// I2 s2 = () -> "abc"; //-- DOES NOT COMPILE
 	}
 }

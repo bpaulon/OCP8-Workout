@@ -113,7 +113,6 @@ public class PrimitiveStreamsTests {
 		
 		thrown.expect(IllegalStateException.class);
 		b.add(5);
-		LongStream.of(1,2);
 	}
 	
 }

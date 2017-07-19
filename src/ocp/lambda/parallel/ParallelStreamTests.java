@@ -90,4 +90,9 @@ public class ParallelStreamTests {
 		System.out.format("\n>>%s\n", rs2);
 		
 	}
+	
+	@Test
+	public void test03() {
+		System.out.println(IntStream.of(1,2,3,4).isParallel());
+	}
 }

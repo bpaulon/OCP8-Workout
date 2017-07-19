@@ -55,17 +55,27 @@ public class PredicateTest {
 	 * The compiler is smart enough to ignore ambiguities in which all the applicable methods are instance methods: 
 	 * @see http://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.13.1
 	 */
-	interface Fun<T,R> { R apply(T arg); }
+	interface Fun<T, R> {
+		R apply(T arg);
+	}
 
 	class C {
-	    int size() { return 0; }
-	    int size(Object arg) { return 0; }
-	    int size(C arg) { return 0; }
+		int size() {
+			return 0;
+		}
 
-	    void test() {
-	        Fun<C, Integer> f1 = C::size;
-	          // OK: reference is to instance method size()
-	    }
+		int size(Object arg) {
+			return 0;
+		}
+
+		int size(C arg) {
+			return 0;
+		}
+
+		void test() {
+			Fun<C, Integer> f1 = C::size;
+			// OK: reference is to instance method size()
+		}
 	}
 	
 	interface Task {

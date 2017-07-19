@@ -122,10 +122,20 @@ public class PathTests {
 		assertEquals("..\\bar", p3.relativize(p4)
 				.toString());
 
+		Path p5 = Paths.get("/a/b/c/d");
+		Path p6 = Paths.get("/a/b/x");
+		assertEquals("..\\..\\x", p5.relativize(p6).toString());
+		
+		
+		Path p7 = Paths.get("../foo");
+		Path p8 = Paths.get("bar");
+		assertEquals("..\\..\\bar", p7.relativize(p8).toString());
+		
+		
 		// absolute to relative is an invalid operation
-		thrown.expect(IllegalArgumentException.class);
-		thrown.expectMessage("'other' is different type of Path");
-		p1.relativize(p3);
+//		thrown.expect(IllegalArgumentException.class);
+//		thrown.expectMessage("'other' is different type of Path");
+//		p1.relativize(p3);
 
 	}
 }

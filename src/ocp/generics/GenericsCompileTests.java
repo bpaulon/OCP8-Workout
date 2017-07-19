@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+@SuppressWarnings("unused")
 public class GenericsCompileTests {
 
 	@Test
