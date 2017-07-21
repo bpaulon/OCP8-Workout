@@ -9,7 +9,7 @@ import org.junit.Test;
 public class FuncInterfaceTests {
 
 	interface I1 {
-		// by default all the methods including default methods are public. Cannot make 
+		// by default all the methods including default methods are public.  
 		static String foo() {
 			return ("I1");
 		}
@@ -27,6 +27,7 @@ public class FuncInterfaceTests {
 			return "bar";
 		}
 		
+		@Override
 		default String baz() {
 			return "baz in I2";
 		}

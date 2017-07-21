@@ -1,11 +1,22 @@
 package ocp.lambda;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+/**
+ * Any local variable, formal parameter, or exception parameter used but not declared 
+ * in a lambda expression must either be declared final or be effectively final (§4.12.4), 
+ * or a compile-time error occurs where the use is attempted.
+ *
+ */
+@SuppressWarnings("unused")
 public class EffectiveFinalCompileTests {
 
 	
@@ -28,7 +39,6 @@ public class EffectiveFinalCompileTests {
 		//IntStream.range(1, 3).peek(s -> a = new AtomicLong(s)); // -> DOES NOT compile
 	}
 	
-	@SuppressWarnings("unused")
 	@Test
 	public void test03() {
 		AtomicLong al = new AtomicLong(1L);
@@ -43,4 +53,32 @@ public class EffectiveFinalCompileTests {
 		// Same for variable i. 
 		// IntStream.of(1,2,3).forEach(s -> i++); // -> DOES NOT compile
 	}
+	
+	int i1 =0;
+	/**
+	 * Only the local variables must be effective final. Instance variables are accessed through a field access operation
+	 * on a reference to some object object.instance_variable. Even when you don't explicitly access it is treated as
+	 * this.instance_variable. The real "variable" here is this which is effectively final.
+	 */
+	@Test
+	public void test04() {
+		Runnable r = () -> {
+			i1 +=1; //equivalent to this.i1 +=1;
+		};
+		i1++;
+	}
+	
+	
+	@Test
+	public void test05() {
+		int i = 1; 
+		Runnable r = new Runnable () {
+			public void run () {
+				// starting with JAVA 8 can access a non-final (effective final) local variable
+				int i1 = i; 
+				//++i; //DOES NOT COMPILE - var i is not effectively final 
+			}
+		};
+	}
+	
 }

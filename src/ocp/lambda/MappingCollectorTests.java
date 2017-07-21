@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,14 +38,14 @@ public class MappingCollectorTests {
 	public void duplicateKeysShouldBeMerged() {
 		AtomicInteger index = new AtomicInteger();
 		Map<String, Integer> map = supplier.get()
-				.collect(Collectors.toMap(UnaryOperator.identity() /* k->k */, 
+				.collect(Collectors.toMap(Function.identity() /* k -> k */, 
 						k -> index.incrementAndGet(),
 						(key1, key2) -> key1));
+				
 		assertEquals(Arrays.asList("aa", "bb", "cc"), map.keySet()
 				.stream()
 				.sorted()
 				.collect(Collectors.toList()));
-
 	}
 
 	@Test
@@ -54,16 +54,21 @@ public class MappingCollectorTests {
 
 		// {cc=[4], bb=[2], aa=[1, 3]}
 		Map<String, List<Integer>> map = supplier.get()
-				.collect(Collectors.groupingBy(k -> (String) k,
+				.collect(Collectors.groupingBy(Function.identity(),
 						Collectors.mapping(k -> (Integer) index.incrementAndGet(), Collectors.toList())));
 
 		// [1, 2, 3, 4]
-		List<Integer> list = map.keySet()
+		List<Integer> positions = map.keySet()
 				.stream()
-				.flatMap(k -> map.get(k)
-						.stream())
+				.flatMap(k -> map.get(k).stream())
 				.sorted()
 				.collect(Collectors.toList());
-		assertEquals(Arrays.asList(1, 2, 3, 4), list);
+		assertEquals(Arrays.asList(1, 2, 3, 4), positions);
+	}
+	
+	@Test
+	public void testMinBy() {
+		Map<String, Long> map = supplier.get().collect(Collectors.groupingBy(k -> k, Collectors.counting()));
+		System.out.println(map);
 	}
 }

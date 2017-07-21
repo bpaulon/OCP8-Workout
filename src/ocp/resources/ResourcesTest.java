@@ -27,4 +27,10 @@ public class ResourcesTest {
 				.collect(Collectors.toList()));
 
 	}
+	
+	@Test
+	public void canSpecifyBundleUsingDotNotation() {
+		ResourceBundle bundle = ResourceBundle.getBundle("ocp.resources.messages");
+		assertEquals("NO", bundle.getString("no"));
+	}
 }

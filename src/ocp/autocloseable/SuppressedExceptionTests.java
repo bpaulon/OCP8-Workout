@@ -3,6 +3,8 @@ package ocp.autocloseable;
 import java.io.IOException;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 public class SuppressedExceptionTests {
 
@@ -27,11 +29,14 @@ public class SuppressedExceptionTests {
 		try {
 			method02();
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
+			assertTrue(e instanceof IOException);
+			
+			StackTraceElement ste = e.getStackTrace()[0];
+			assertEquals(23, ste.getLineNumber());
+
+			// no suppressed exceptions
 			Throwable[] throwables = e.getSuppressed();
-			for (Throwable throwable : throwables) {
-				System.out.println(throwable);
-			}
+			assertTrue(throwables.length == 0);
 		}
 	}
 }

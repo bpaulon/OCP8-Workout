@@ -68,6 +68,7 @@ public class WatchServiceTests {
 
 		key.cancel();
 		assertFalse(key.isValid());
+		touchFile(createdFile);
 		assertNull(watchService.poll(500, TimeUnit.MILLISECONDS));
 
 		key.cancel();
@@ -83,7 +84,7 @@ public class WatchServiceTests {
 
 	private WatchKey takeKeyAndAssertEquals(Kind<Path> keyKind) throws IOException, InterruptedException {
 
-		WatchKey key = watchService.poll(500, TimeUnit.MILLISECONDS);
+		WatchKey key = watchService.take();//poll(500, TimeUnit.MILLISECONDS);
 		assertNotNull(key);
 		List<WatchEvent<?>> events = key.pollEvents();
 

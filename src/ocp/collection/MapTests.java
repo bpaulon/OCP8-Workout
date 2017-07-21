@@ -64,7 +64,6 @@ public class MapTests {
 	 * </ul>
 	 * The following test the correct selection of the constructor using lambda Supplier, Function and BiFunction
 	 */
-	
 	@Test
 	public void shouldResolveConstructor() {
 		Supplier<Map<?, ?>> s = HashMap::new;

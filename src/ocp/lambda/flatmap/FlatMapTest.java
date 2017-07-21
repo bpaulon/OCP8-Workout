@@ -2,6 +2,7 @@ package ocp.lambda.flatmap;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,7 +18,7 @@ public class FlatMapTest {
 		List<? extends Object> reunion = Stream.of(strings, integers)
 				.flatMap(l -> l.stream())
 				.collect(Collectors.toList());
-		System.out.println(reunion);
+		System.out.println("strings + integers: " + reunion);
 
 		// Stream.of(e) returns a stream of one element which is a list.
 		Stream.of(strings, integers)
@@ -25,9 +26,12 @@ public class FlatMapTest {
 				.forEach(System.out::print);
 
 		// Slightly more complicated version where the list is transformed into a stream of elements
-		Stream.of(strings, integers)
+		Object[]  a =Stream.of(strings, integers)
 				.flatMap(e -> Stream.of(e).flatMap(t -> t.stream()))
-				.forEach(System.out::print);
+				.peek(System.out::println)
+				.toArray(Object[]::new);
+		
+		System.out.println(Arrays.toString(a));
 	}
 
 }

@@ -10,28 +10,27 @@ public class AutoclosableWithFinallyTests {
 		public ResourceA() throws Exception {
 			throw new Exception("ResourceA ctor exception");
 		}
-		
+
 		public void read() throws Exception {
 			throw new Exception("ResourceA read exception");
 		}
-	
+
 		@Override
 		public void close() throws Exception {
 			throw new Exception("ResourceA close exception");
 		}
 	}
-	
+
 	@Test
 	public void test01() throws Exception {
-		try(ResourceA r = new ResourceA()) {
+		try (ResourceA r = new ResourceA()) {
 			throw new IOException("from try block");
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println(">> In catch block");
 			e.printStackTrace();
 			throw e;
 		} finally {
 			throw new RuntimeException("from finally");
-			//System.out.println(Arrays.asList(e.getSuppressed()));
 		}
 	}
 }

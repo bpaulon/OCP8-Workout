@@ -1,6 +1,6 @@
 package ocp.file;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -35,6 +35,7 @@ public class PathTests {
 
 	@Test
 	public void test01() throws IOException {
+		// get the current directory
 		Path p = Paths.get(".")
 				.normalize()
 				.toAbsolutePath();
@@ -101,7 +102,7 @@ public class PathTests {
 	}
 
 	@Test
-	public void test04() {
+	public void testGetRoot() {
 		Path p = Paths.get("c:/users/bcp");
 
 		assertEquals("c:\\", p.getRoot()
@@ -137,5 +138,19 @@ public class PathTests {
 //		thrown.expectMessage("'other' is different type of Path");
 //		p1.relativize(p3);
 
+	}
+	
+	@Test
+	public void testEndsWith() {
+		Path p = Paths.get("aa", "bb", "cee"); // aa/bb/cee
+		assertTrue(p.endsWith(Paths.get("bb", "cee"))); // aa/bb/cee endsWith bb/cee 
+		// endsWith uses directory boundaries and it is not just
+		assertFalse(p.endsWith("b/cee"));
+		assertFalse(p.endsWith(Paths.get("ee")));
+		
+		assertTrue(p.startsWith("aa"));
+		assertTrue(p.startsWith("aa/bb"));
+		assertFalse(p.startsWith("a"));
+		
 	}
 }

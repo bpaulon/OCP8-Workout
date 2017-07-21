@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("unused")
 public class GenericsCompileTests {
@@ -93,8 +94,6 @@ public class GenericsCompileTests {
 		 */
 		
 		//list2.add(0); // does not compile
-		Number number = list2.get(0);
-		
 	}
 	
 	@Test
@@ -107,10 +106,37 @@ public class GenericsCompileTests {
 		list.addAll(new ArrayList<>());
 		
 		/*
-		 * It does not compile. The definition of the subList declares that you can add objects that are of String type but there is
-		 * no guarantee what type of object you can get. Therefore adding its elements to a list of String objects results in compile
-		 * error
+		 * It does not compile. Sublist can contain any type which is ancestor of String (String included) and it might contain just plain Objects
+		 * Therefore adding its elements to a list of String objects results in compile error - list must provide elements of type String
 		 */
 		//list.addAll(subList);
+		// but it is completely valid to add a list of String to the subList which accepts any ancestor of String (String included)
+		subList.addAll(list);
+	}
+	
+	@Test
+	public void test03() {
+		List<Object> l1 = new ArrayList<>();
+		List<? super String> l2 = l1;
+		
+		l1.add(new Object());
+		l2.add("abc");
+		
+		//The list contains objects of different types
+		assertEquals(Object.class, l2.get(0).getClass());
+		assertEquals(String.class, l2.get(1).getClass());
+		
+	}
+	
+	@Test
+	public void test04() {
+		List<Number> l1 = new ArrayList<>();
+		List<? extends Number> l2 = l1;
+		l1.add(0);
+		l1.add(1.0d);
+		
+		// The list l2 contains an Integer and a Double
+		assertEquals(Integer.class, l2.get(0).getClass());
+		assertEquals(Double.class, l2.get(1).getClass());
 	}
 }

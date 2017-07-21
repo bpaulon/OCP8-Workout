@@ -1,6 +1,6 @@
 package ocp.lambda;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -10,7 +10,6 @@ import java.util.OptionalInt;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.junit.Rule;
@@ -85,11 +84,15 @@ public class PrimitiveStreamsTests {
 	
 	@Test
 	public void toArray() {
-		Stream<Double> s = Stream.of(1.0, 2.0,3.0,4.0);
+		Supplier<Stream<Double>> su = () -> Stream.of(1.0, 2.0, 3.0, 4.0);
 		IntFunction<Double[]> f = i -> new Double[i];
-		Double[] a = (Double[])s.toArray(f);
-		
-		System.out.println(Arrays.asList(a));
+		Double[] a = su.get().toArray(f);
+
+		// OR
+		f = Double[]::new;
+		a = su.get().toArray(f);
+
+		assertArrayEquals(new Double[] { 1.0, 2.0, 3.0, 4.0 }, a);
 	}
 	
 	@Test
@@ -115,4 +118,17 @@ public class PrimitiveStreamsTests {
 		b.add(5);
 	}
 	
+	@Test
+	public void convertAndNarrowTest() {
+		Supplier<IntStream> s = () -> IntStream.of(1, 2, 3, 4, 5);
+		int[] a = s.get()
+				.map(i -> ++i)
+				.mapToObj(i -> i)	// Stream<Integer>
+				.mapToInt(i -> i)	//-> IntStream
+				.mapToDouble(i -> i) //-> DoubleStream
+				.mapToInt(i -> (int) i) //-> explicit narrow required to convert to ->IntStream
+				.toArray();
+		
+		assertArrayEquals(new int[]{2,3,4,5,6}, a);		
+	}
 }

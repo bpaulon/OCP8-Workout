@@ -2,6 +2,11 @@ package ocp.switchtests;
 
 import org.junit.Test;
 
+/**
+ * Only convertible int values (int, short, byte, char), their wrappers(Integer, Short, Byte, Character)
+ * Enum and strings can be used with switch
+ *
+ */
 public class SwitchTests {
 
 	@Test
