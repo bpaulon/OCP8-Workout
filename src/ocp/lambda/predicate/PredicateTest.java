@@ -48,6 +48,9 @@ public class PredicateTest {
 		BinaryOperator<String> bo = String::concat;
 		// Function<String, String> func = String::concat; // DOES NOT Compile - it should be a BiFunction
 		Function<String, String> func2 = new ClassA()::m;
+		
+		ClassA ca = new ClassA();
+		Function<String, String> f3 = ca::m;
 	
 	}
 	

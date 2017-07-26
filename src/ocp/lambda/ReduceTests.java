@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.junit.Test;
@@ -48,6 +50,20 @@ public class ReduceTests {
 				.mapToDouble(i -> i.intValue())
 				.average()
 				.getAsDouble(), 0.0);
+	}
+	
+	@Test
+	// example of reduce(Integer identity, BiFunction accumulator, BiOperator combiner)
+	public void testReduceWithAccumulator() {
+		Supplier<Stream<Integer>> sup = () -> IntStream.rangeClosed(1, 6)
+				.boxed();
+		int sum = sup.get()
+				.reduce(0, (i1, i2) -> i1 + i2*10, Integer::sum);
+		assertEquals(210, sum);
 
+		
+		sum = sup.get()
+				.collect(Collectors.summingInt(i -> i.intValue()));
+		assertEquals(21, sum);
 	}
 }

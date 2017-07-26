@@ -141,6 +141,13 @@ public class PathTests {
 	}
 	
 	@Test
+	public void relativizeOfWindowsPath() {
+		Path p = Paths.get("c://temp");
+		assertEquals("..\\proj", p.relativize(Paths.get("c://proj")).toString());
+		assertEquals("c:\\proj", p.resolve(Paths.get("c://proj")).toString());
+	}
+	
+	@Test
 	public void testEndsWith() {
 		Path p = Paths.get("aa", "bb", "cee"); // aa/bb/cee
 		assertTrue(p.endsWith(Paths.get("bb", "cee"))); // aa/bb/cee endsWith bb/cee 

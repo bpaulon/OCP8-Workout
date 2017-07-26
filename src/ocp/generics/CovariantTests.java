@@ -39,7 +39,7 @@ public class CovariantTests {
 		// cannot be converted to List<Number>
 		// List<Number> numbers = process(list); // DOES NOT COMPILE
 		//
-		// It it would then we could have add a Long or Double to the List<Number> and get a ClassCast exception at runtime
+		// It it would then we could have add a Long or Double to the List<Number> and get a ClassCastException at runtime
 		// 
 		// Eg:
 		//		List<Integer> li1 = new ArrayList<>();

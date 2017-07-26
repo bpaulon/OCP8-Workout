@@ -22,7 +22,7 @@ public class InheritanceTests {
 		
 		cI = (IChild) oI; //possible scenario:  class AnotherImpl implements IOther, IChild 
 		c = (Child)p;	// possible scenario Parent p = new Child(); Child c = (Child)p;
-	  //c = (Child) o;	// multiple inheritance is not possible so a class that extends both Other and Child cannot exist
+	  //c = (Child) o;	// multiple class inheritance is not possible so a class that extends both Other and Child cannot exist
 		
 		cI = (IChild)o; // possible scenario  class AnotherImpl extends Other implements IChild. If class Other is declared
 						// final this won't compile any more

@@ -60,14 +60,25 @@ public class SwitchTests {
 		Character ch = 'c';
 		switch(ch) {
 		case 'c' :break;
+		//case 'c': break; //-- DOES NOT COMPILE - duplicate case
 		case 2: break;
 		}
 		
 		Short sh = 7;
 		switch(sh) {
 			case '4': break;
+			default: break; // default can be anywhere
 			case 3 : break;
 		}
+		
+		// the default does not get called if a matching case exists.
+		Byte b = -128;
+		switch (b) {
+		default: System.out.println("default");
+		case -128 : System.out.println(b);
+		}
+		
+		switch (b) {}
 	}
 	
 }

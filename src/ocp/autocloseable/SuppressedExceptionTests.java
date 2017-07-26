@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 public class SuppressedExceptionTests {
 
 	public static void method01() {
@@ -30,9 +29,9 @@ public class SuppressedExceptionTests {
 			method02();
 		} catch (Exception e) {
 			assertTrue(e instanceof IOException);
-			
+
 			StackTraceElement ste = e.getStackTrace()[0];
-			assertEquals(23, ste.getLineNumber());
+			assertEquals(22, ste.getLineNumber());
 
 			// no suppressed exceptions
 			Throwable[] throwables = e.getSuppressed();

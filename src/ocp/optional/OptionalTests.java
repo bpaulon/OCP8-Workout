@@ -36,6 +36,5 @@ public class OptionalTests {
 	public void mapShouldTestIfValuePresent() {
 		Optional<String> os = Optional.empty();
 		assertEquals(Integer.valueOf(5), os.map(String::length).orElse(5));
-		
 	}
 }

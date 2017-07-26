@@ -40,7 +40,7 @@ public class ConcurrentHashMapTests {
 		assertNull(map.get("X"));
 
 		thrown.expect(NullPointerException.class);
-		// assumes key X exists and it fails with NPE when trying to increment
+		// the following assumes key X exists and then it fails with NPE when trying to increment nonexisting value
 		map.compute("X", (k, v) -> {
 			v.increment();
 			return v;
@@ -51,7 +51,7 @@ public class ConcurrentHashMapTests {
 	public void test02() {
 		LongAdder la = new LongAdder();
 		la.add(2);
-		
+
 		BiFunction<LongAdder, LongAdder, LongAdder> bf = (oldValue, newValue) -> {
 			oldValue.add(newValue.longValue());
 			return oldValue;

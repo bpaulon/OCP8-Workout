@@ -65,5 +65,6 @@ public class OperatorTests {
 				.collect(Collectors.toCollection(ArrayList::new));
 		assertEquals(Arrays.asList(0, 0, 0, 0, 0), l1);
 	}
+
 	
 }

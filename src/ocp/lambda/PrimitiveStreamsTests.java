@@ -126,7 +126,7 @@ public class PrimitiveStreamsTests {
 				.mapToObj(i -> i)	// Stream<Integer>
 				.mapToInt(i -> i)	//-> IntStream
 				.mapToDouble(i -> i) //-> DoubleStream
-				.mapToInt(i -> (int) i) //-> explicit narrow required to convert to ->IntStream
+				.mapToInt(i -> (int) i) //-> explicit narrow required to convert to ->IntStream from double
 				.toArray();
 		
 		assertArrayEquals(new int[]{2,3,4,5,6}, a);		
