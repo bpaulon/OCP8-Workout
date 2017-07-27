@@ -23,6 +23,7 @@ public class ListTests {
 	@Test
 	public void test02() {
 		List<String> l1 = new ArrayList<>(Arrays.asList("a", "b"));
+		//removeIf needs a Predicate
 		l1.removeIf(s -> s.startsWith("a"));
 		assertEquals(1, l1.size());
 	}

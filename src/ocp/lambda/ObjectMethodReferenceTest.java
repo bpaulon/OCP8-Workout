@@ -36,12 +36,31 @@ public class ObjectMethodReferenceTest {
 		Supplier<Stream<String>> supplier = () -> Arrays.asList("1", "2", "3")
 				.stream();
 
+		//instance call 
 		supplier.get()
 				.forEach(this::method01);
 		supplier.get()
+				.forEach(s -> this.method01(s));
+		supplier.get()
+				.forEach((String s) -> this.method01(s));
+		
+		//static call outside class
+		supplier.get()
 				.forEach(ClassA::m2);
 		supplier.get()
+				.forEach(s -> ClassA.m2(s));
+		
+		//instance call outside class
+		supplier.get()
 				.forEach(new ClassA()::m3);
+		supplier.get()
+				.forEach(s -> new ClassA().m3(s));
+		
+		ClassA ca = new ClassA();
+		supplier.get()
+				.forEach(ca::m3);
+		supplier.get()
+				.forEach(s -> ca.m3(s));
 
 	}
 

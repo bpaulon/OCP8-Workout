@@ -1,5 +1,6 @@
 package ocp.thread;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.Callable;
@@ -43,9 +44,18 @@ public class CallableTests {
 		}
 
 	}
-	
+
 	@Test
-	public void shouldLaunchExceptionWhenTimeout() throws InterruptedException, ExecutionException, TimeoutException {
+	public void futureFromRunnableShouldReturnNull() throws InterruptedException, ExecutionException {
+		ExecutorService es = Executors.newCachedThreadPool();
+		Future<?> f = es.submit(() -> {
+			System.out.println("running");
+		});
+		assertNull(f.get());
+	}
+
+	@Test
+	public void shouldLaunchExceptionWhenTimedout() throws InterruptedException, ExecutionException, TimeoutException {
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<String> f = service.submit(() -> {
 			try {

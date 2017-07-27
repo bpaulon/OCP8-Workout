@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import org.junit.Rule;
@@ -27,7 +27,7 @@ public class CopyOnWriteArrayListTests {
 	public ExpectedException thrown = ExpectedException.none();
 
 	/**
-	 * From JavaDoc: Element-changing operations on iterators themselves (of CopyOnWriteArrayList) (remove, set, and add) 
+	 * From JavaDoc: Element-changing operations on iterators themselves (Iterator or ListIterator) (remove, set, and add) 
 	 * are not supported. These methods throw UnsupportedOperationException.
 	 */
 	@Test
@@ -118,7 +118,7 @@ public class CopyOnWriteArrayListTests {
 
 	private void sleepRandom() {
 		try {
-			Thread.sleep((int)new Random().nextDouble() * 10);
+			Thread.sleep((int)ThreadLocalRandom.current().nextDouble() * 10);
 		} catch (InterruptedException e) {
 			/* ignored */
 		}

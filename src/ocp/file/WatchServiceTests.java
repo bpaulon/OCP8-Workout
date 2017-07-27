@@ -18,10 +18,8 @@ import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.nio.file.attribute.FileTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -59,7 +57,7 @@ public class WatchServiceTests {
 
 		touchFile(createdFile);
 		WatchKey key = takeKeyAndAssertEquals(StandardWatchEventKinds.ENTRY_MODIFY);
-
+		
 		key.reset();
 		assertTrue(key.isValid());
 
@@ -86,11 +84,17 @@ public class WatchServiceTests {
 
 		WatchKey key = watchService.take();//poll(500, TimeUnit.MILLISECONDS);
 		assertNotNull(key);
+		
+		// The event count is always 1 for the registered event kinds: ENTRY_MODIFY, ENTRY_DELETE, ENTRY_CREATE
+		// Only the 
 		List<WatchEvent<?>> events = key.pollEvents();
-
-		assertEquals(Arrays.asList(keyKind), events.stream()
-				.map(e -> e.kind())
-				.collect(Collectors.toList()));
+		assertNotNull(events);
+		assertEquals(1, events.size());
+		
+		WatchEvent<?> we = events.get(0);
+		assertEquals(keyKind, we.kind());
+		assertEquals(Paths.get("file.txt"), we.context());
+		
 		return key;
 	}
 }

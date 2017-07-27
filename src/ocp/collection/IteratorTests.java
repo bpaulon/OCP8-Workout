@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.UnaryOperator;
@@ -51,6 +52,18 @@ public class IteratorTests {
 		}
 
 		assertTrue(list.isEmpty());
+	}
+	
+	@Test
+	public void addOnListIteartorShouldChangeCollection() {
+		ListIterator<String> lit = list.listIterator();
+		while(lit.hasNext()){
+			String s = lit.next();
+			lit.set(s.concat("#"));
+			lit.add(s.concat("*"));
+			
+		}
+		System.out.println(list);
 	}
 	
 	@Test
