@@ -14,9 +14,9 @@ import java.util.stream.IntStream;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+@SuppressWarnings("unused")
 public class OperatorTests {
-
-	@SuppressWarnings("unused")
+	
 	@Test
 	public void test01() {
 

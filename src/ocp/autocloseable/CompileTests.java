@@ -8,10 +8,12 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+@SuppressWarnings("unused")
 public class CompileTests {
 
 	@Test
 	public void test01() {
+
 		class MyResource /* implements AutoCloseable */ {
 			public MyResource() {
 			}
@@ -36,8 +38,10 @@ public class CompileTests {
 			}
 		}
 
+		// we can have a try-with-resources without catch. The exception thrown by the close method should be declared
 		try (MyResource res = new MyResource()) {
 		}
+
 	}
 
 	@Test
@@ -51,4 +55,5 @@ public class CompileTests {
 		}
 
 	}
+
 }

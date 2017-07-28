@@ -76,10 +76,8 @@ public class PathTests {
 		Path p = Paths.get("/home/users/bcp/");
 
 		assertEquals(3, p.getNameCount());
-		assertEquals("\\", p.getRoot()
-				.toString());
-		assertEquals("\\home\\users", p.getParent()
-				.toString());
+		assertEquals("\\", p.getRoot().toString());
+		assertEquals("\\home\\users", p.getParent().toString());
 		assertTrue(p.startsWith("/"));
 		assertTrue(p.endsWith("bcp/"));
 		assertEquals("..", p.resolve("..")
@@ -88,29 +86,26 @@ public class PathTests {
 	}
 
 	@Test
-	public void test03() {
+	public void testGetComponentsRelativePath() {
 		Path p = Paths.get("users/bcp/data");
 
-		System.out.println(FileSystems.getDefault()
-				.getSeparator());
-		System.setProperty(File.separator, "/");
-
 		assertNull(p.getRoot());
-		// forward slash file separator in the path is replace automatically with the windows separator
-		assertEquals("users\\bcp", p.getParent()
-				.toString());
+		// forward slash file separator in the path is replaced automatically with the windows separator
+		assertEquals("users\\bcp", p.getParent().toString());
+		assertEquals("data", p.getFileName().toString());
 	}
 
 	@Test
-	public void testGetRoot() {
+	public void testGetComponentsAbsolutePath() {
 		Path p = Paths.get("c:/users/bcp");
 
-		assertEquals("c:\\", p.getRoot()
-				.toString());
+		assertEquals("c:\\", p.getRoot().toString());
+		assertEquals("c:\\users", p.getParent().toString());
+		assertEquals("bcp", p.getFileName().toString());
 	}
 
 	@Test
-	public void relativizeShouldWorkOnSameTypeOfPaths() throws Exception {
+	public void testRelativizeOfAbsoluteAndRelativePath() throws Exception {
 		// absolute paths
 		Path p1 = Paths.get("/usr/local/");
 		Path p2 = Paths.get("/etc");
@@ -127,17 +122,24 @@ public class PathTests {
 		Path p6 = Paths.get("/a/b/x");
 		assertEquals("..\\..\\x", p5.relativize(p6).toString());
 		
-		
 		Path p7 = Paths.get("../foo");
 		Path p8 = Paths.get("bar");
 		assertEquals("..\\..\\bar", p7.relativize(p8).toString());
 		
+		Path p9 = Paths.get("./../foo");
+		Path p10 = Paths.get("bar");
+		assertEquals("..\\..\\..\\bar", p9.relativize(p10).toString());
+	}
+	
+	@Test
+	public void relativizeShouldWorkOnSameTypeOfPath() throws Exception {
+		Path p1 = Paths.get("c:/temp/data");
+		Path p2 = Paths.get("users/data");
 		
 		// absolute to relative is an invalid operation
-//		thrown.expect(IllegalArgumentException.class);
-//		thrown.expectMessage("'other' is different type of Path");
-//		p1.relativize(p3);
-
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("'other' is different type of Path");
+		p1.relativize(p2);
 	}
 	
 	@Test
