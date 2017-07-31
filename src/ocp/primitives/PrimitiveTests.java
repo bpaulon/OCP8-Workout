@@ -1,5 +1,7 @@
 package ocp.primitives;
 
+import java.util.stream.Stream;
+
 import org.junit.Test;
 
 public class PrimitiveTests {
@@ -53,4 +55,10 @@ public class PrimitiveTests {
 		// the following does not compile
 		// Integer i1 = ch; // DOES NOT COMPILE 
 	}
+	
+	@Test
+	public void test02() {
+		Stream.<Character>iterate('z', c-> --c).limit(5).forEach(System.out::println);
+	}
+	
 }

@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class CyclicBarrierTests {
 
-	CyclicBarrier cb1 = new CyclicBarrier(3, () -> System.out.println("barrier tripped."));
+	CyclicBarrier cb1 = new CyclicBarrier(3, () -> System.out.println("barrier tripped by " + tn()));
 
 	class A {
 		private void doStuff() {
@@ -33,7 +33,7 @@ public class CyclicBarrierTests {
 		ExecutorService s = Executors.newFixedThreadPool(9);
 
 		A a = new A();
-		IntStream.rangeClosed(1, 3)
+		IntStream.rangeClosed(1, 9)
 				.forEach(i -> s.submit(() -> a.doStuff()));
 	}
 
@@ -42,4 +42,5 @@ public class CyclicBarrierTests {
 		return Thread.currentThread()
 				.getName();
 	}
+	
 }

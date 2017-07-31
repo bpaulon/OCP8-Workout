@@ -131,4 +131,10 @@ public class PrimitiveStreamsTests {
 		
 		assertArrayEquals(new int[]{2,3,4,5,6}, a);		
 	}
+	
+	@Test
+	public void testNonAssociativeReduce() {
+		OptionalInt oi = IntStream.of(1, 2,3).reduce((i,j)->i -j);
+		System.out.println(oi);
+	}
 }
