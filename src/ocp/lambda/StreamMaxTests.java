@@ -21,9 +21,9 @@ public class StreamMaxTests {
 						return o1.compareTo(o2);
 					}
 				});
-
 		assertEquals(Integer.valueOf(34), max.get());
 
+		//-- with IntStream we get call max without a comparator 
 		OptionalInt maxi = IntStream.of(1, 2, 8, 4, 34, 23)
 				.max();
 		assertEquals(34, maxi.getAsInt());

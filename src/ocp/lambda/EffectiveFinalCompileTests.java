@@ -56,7 +56,7 @@ public class EffectiveFinalCompileTests {
 	
 	int i1 =0;
 	/**
-	 * Only the local variables must be effective final. Instance variables are accessed through a field access operation
+	 * ONLY the LOCAL variables must be effective final. Instance variables are accessed through a field access operation
 	 * on a reference to some object object.instance_variable. Even when you don't explicitly access it is treated as
 	 * this.instance_variable. The real "variable" here is this which is effectively final.
 	 */

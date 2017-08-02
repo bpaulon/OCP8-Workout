@@ -33,8 +33,20 @@ public class OptionalTests {
 	}
 	
 	@Test
-	public void mapShouldTestIfValuePresent() {
+	/**
+	 * If a value is present, apply the provided mapping function to it, and if the result is non-null, return an
+	 * Optional describing the result. Otherwise return an empty Optional
+	 */
+	public void mapShouldTestIfValuePresent() throws Exception {
 		Optional<String> os = Optional.empty();
-		assertEquals(Integer.valueOf(5), os.map(String::length).orElse(5));
+		assertEquals(Integer.valueOf(5), os.map(String::length)
+				.orElse(5));
+
+		os = Optional.of("foo");
+		assertEquals(Integer.valueOf(3), os.map(String::length)
+				.orElseThrow(Exception::new));
+
+		os.flatMap(s -> Optional.ofNullable("bar"))
+				.ifPresent(s -> assertEquals("bar", s));
 	}
 }

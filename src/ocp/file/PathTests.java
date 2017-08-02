@@ -94,6 +94,14 @@ public class PathTests {
 		assertEquals("users\\bcp", p.getParent().toString());
 		assertEquals("data", p.getFileName().toString());
 	}
+	
+	@Test
+	public void testGetComponentsPathRepresentingFile() {
+		Path  p = Paths.get("file.txt");
+		assertEquals("file.txt", p.toString());
+		assertNull(p.getParent());
+		assertNull(p.getRoot());
+	}
 
 	@Test
 	public void testGetComponentsAbsolutePath() {

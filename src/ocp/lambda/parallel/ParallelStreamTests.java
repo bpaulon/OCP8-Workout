@@ -172,8 +172,24 @@ public class ParallelStreamTests {
 	
 	@Test
 	public void reduceIdentityIsRepeated() {
-		String res = Arrays.asList("a", "b","c","d","e").parallelStream().reduce("*", String::concat);
+		String res = Arrays.asList("a", "b", "c", "d", "e")
+				.parallelStream()
+				.reduce("*", String::concat);
 		System.out.println(res); // --> *a*b*c*d*e
-
+	}
+	
+	@Test
+	public void sortedCreatesEncounterOrderForCollect() {
+		Supplier<Stream<String>> sup = () -> Arrays.asList("x", "b", "c", "a", "e")
+				.parallelStream();
+		List<String> l1 = null;
+		l1 = sup.get().sorted()
+				.collect(Collectors.toCollection(ArrayList<String>::new));
+		assertEquals(Arrays.asList("a","b","c","e","x"), l1);
+		
+		// the forEach breaks the order
+		sup.get().sorted().forEach(System.out::print);
+		// need to use forEachOrdered
+		sup.get().sorted().forEachOrdered(System.out::print);
 	}
 }

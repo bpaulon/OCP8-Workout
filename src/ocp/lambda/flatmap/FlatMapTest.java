@@ -62,4 +62,23 @@ public class FlatMapTest {
 		s3.addAll(l2);
 		assertEquals(s3, s2);
 	}
+	
+	@Test
+	public void test03() {
+		// Stream.of(T...values) - is a var-arg method so we can pass in an array.
+		String s = "ab,cd,ef";
+		List<String> ls1 = Stream.of(s.split(","))
+				.collect(Collectors.toList());
+		List<String> ls2 = Stream.of(new String[] { "ab", "cd", "ef" })
+				.collect(Collectors.toList());
+		assertEquals(ls1, ls2);
+
+		// Stream.of(T val) creates a stream from the passed in object (one element)
+		List<Integer> l = Arrays.asList(1, 2, 3, 4);
+		Stream.of(l)
+				.forEach(e -> assertTrue(e instanceof List));
+		Stream.of(l)
+				.flatMap(l1 -> l1.stream())
+				.forEach(e -> assertTrue(e instanceof Integer));
+	}
 }
