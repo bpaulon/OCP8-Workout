@@ -44,7 +44,6 @@ public class ComputeIfTests {
 	@Test
 	public void testComputeIfPresent02() {
 		BiFunction<String, Integer, String> remappingFunction = (k, v) -> k + "-";
-		
 		// will not compile. The returned type of the BiFunction must be the same type as 
 		// the value in the map
 		//String newMappedJenny = counts. computeIfPresent("Jenny", remappingFunction);

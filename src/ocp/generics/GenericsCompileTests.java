@@ -104,7 +104,7 @@ public class GenericsCompileTests {
 		// The List.addAll() method requires an argument of type Collection<? extends String>, thus the element type of the new ArrayList 
 		// instance if inferred 
 		list.addAll(new ArrayList<>());
-		
+		subList.add(new String());
 		/*
 		 * It does not compile. Sublist can contain any type which is ancestor of String (String included) and it might contain just plain Objects
 		 * Therefore adding its elements to a list of String objects results in compile error - list must provide elements of type String

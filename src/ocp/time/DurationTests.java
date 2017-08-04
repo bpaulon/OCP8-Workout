@@ -29,5 +29,8 @@ public class DurationTests {
 		Duration d1 = Duration.ofDays(3);
 		Duration d2 = d1.ofHours(25);
 		assertEquals("PT25H", d2.toString());
+		
+		Duration d3 = Duration.of(60,  ChronoUnit.SECONDS);
+		assertEquals("PT1M", d3.toString());
 	}
 }

@@ -49,6 +49,7 @@ public class MappingCollectorTests {
 				.stream()
 				.sorted()
 				.collect(Collectors.toList()));
+		System.out.println(map);
 	}
 
 	@Test
